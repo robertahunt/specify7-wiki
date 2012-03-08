@@ -12,7 +12,7 @@ The role of the back end is three-fold. Most important it provides RESTful acces
 
 The back end is implemented in Python and makes use of the Django framework for ORM and authentication subsystems. The TastyPie library for Django is used to facilitate the implementation of the API resources.
 
-* The ORM layer:
+* **The ORM layer:**
     The ORM is built on the foundation provided by Django. Django represents a database schema through a set of classes where basically each database table is modeled by a Python class, called appropriately enough, a _Model_. Here is an example from the [Django Documentation](https://docs.djangoproject.com/en/1.3/topics/db/models/):
 
         class Musician(models.Model):
@@ -41,7 +41,7 @@ The back end is implemented in Python and makes use of the Django framework for 
 
     The code that does so is in [djangospecify/specify/models.py](https://github.com/benanhalt/djangospecify/blob/master/specify/models.py).
 
-* The API layer:
+* **The API layer:**
     The API generation is based around the [TastyPie](https://github.com/toastdriven/django-tastypie) library. The idea is much the same as before. Traditionally each resource would be described to TastyPie by a Python class. E.g. from [the docs](http://django-tastypie.readthedocs.org/en/latest/fields.html):
 
         class PersonResource(Resource):
@@ -54,5 +54,15 @@ The back end is implemented in Python and makes use of the Django framework for 
 
     So again the strategy is dynamic class generation. This code lives at [djangospecify/specify/api.py](https://github.com/benanhalt/djangospecify/blob/master/specify/api.py). The code is complicated somewhat by subclassing the TastyPie resource implementations to provide customized behavior, but the module remains quite concise and manageable.
 
-* Authentication:
+* **Authentication:**
      It is desirable that the authentication system utilize the same user credentials as the current thick client. That has been achieved by implementing the same decryption protocol that is used to challenge user passwords against the encrypted versions stored in the `specifyusers` table. The relevant code is in [djangospecify/specify/encryption.py](https://github.com/benanhalt/djangospecify/blob/master/specify/encryption.py). And the code which interfaces it to the Django authentication system is found in [djangospecify/specify/authbackend.py](https://github.com/benanhalt/djangospecify/blob/master/specify/authbackend.py).
+
+### The front end
+
+The front end will be the more complicated of the two major components since it must interact with the most complicated part that exists in any application, the user. Additionally, the front end must leverage existing UI customization definitions that are integral to the Specify application. These definitions consist of perhaps several dozen XML files per installation for which there exists no specification (to my knowledge) beyond the current thick client implementation.
+
+Clearly since the application is targeting the web, this UI rendering will take some form whereby XML UI definitions are the input to a process that ultimately produces HTML as output. Thus, my strategy has been to utilize the powerful DOM traversal and manipulation capabilities of the jQuery JavaScript library both for parsing the XML definitions and for building the corresponding HTML documents.
+
+The overall front end naturally breaks down into several subsystems among which separation-of-concerns should be maintained to as high a degree as possible. The subsystems I have considered so far are as follows:
+
+* **Form generation:**
