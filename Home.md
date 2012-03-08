@@ -71,4 +71,4 @@ The overall front end naturally breaks down into several subsystems among which 
     At present the front end code is changing rapidly, but most of the form generation implementation can be found in [djangospecify/specify/static/specifyform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/specifyform.js).
 
 * **Form population:**
-    
+    Form population consists of filling in the controls on a page with the data from a API resource object. This includes setting up control widgets (e.g. pick lists and combo boxes) and applying formatting to the raw field data. Again, separation-of-concerns should be respected here. As a dynamic portion of the application, the only interaction with the static form descriptions must occur through the HTML produced by the form generation subsystem. The generated forms must contain all necessary information to allow the various fragments to be assembled, and all control widgets to be configured.
