@@ -66,3 +66,9 @@ Clearly since the application is targeting the web, this UI rendering will take 
 The overall front end naturally breaks down into several subsystems among which separation-of-concerns should be maintained to as high a degree as possible. The subsystems I have considered so far are as follows:
 
 * **Form generation:**
+    Form generation should be possible as a purely static process. That is, the existing static XML resources describing the UI ought to be sufficient to produce completely isomorphic HTML documents (or document fragments that can be assembled without access to the original resources) without any dynamic information. This allows the HTML UI to be generated ahead of time and cached if required for performance reasons. It also makes it possible to build tests for the form generation system that can verify predictable behavior over the course of development. Finally, it permits reuse of this component outside of the broader app, perhaps facilitating a JSF or other implementation.
+
+    At present the front end code is changing rapidly, but most of the form generation implementation can be found in [djangospecify/specify/static/specifyform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/specifyform.js).
+
+* **Form population:**
+    
