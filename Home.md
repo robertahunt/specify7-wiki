@@ -1,6 +1,6 @@
 # Welcome to the djangospecify wiki!
 
-The purpose of this page is to provide an overview of the code for those who would like to understand it's workings.
+The purpose of this page is to provide an overview of the code for those who would like to understand its workings.
 
 ## Architecture in broad strokes
 
@@ -37,7 +37,22 @@ The back end is implemented in Python and makes use of the Django framework for 
 
         Album = type('Album', ....
 
-   If the literals are replaced with variables and the field objects instantiated by function dispatch, it is possible to straight forwardly turn the XML description of the schema into a set of objects that Django can understand.
+    If the literals are replaced with variables and the field objects instantiated by function dispatch, it is possible to straight forwardly turn the XML description of the schema into a set of objects that Django can understand.
 
-   The code that does so is in [djangospecify/specify/models.py](https://github.com/benanhalt/djangospecify/blob/master/specify/models.py).
+    The code that does so is in [djangospecify/specify/models.py](https://github.com/benanhalt/djangospecify/blob/master/specify/models.py).
 
+* The API layer:
+    The API generation is based around the [TastyPie](https://github.com/toastdriven/django-tastypie) library. The idea is much the same as before. Traditionally each resource would be described to TastyPie by a Python class. E.g. from [the docs](http://django-tastypie.readthedocs.org/en/latest/fields.html):
+
+        class PersonResource(Resource):
+            name = fields.CharField(attribute='name')
+            age = fields.IntegerField(attribute='years_old', null=True)
+            created = fields.DateTimeField(readonly=True, default=utils.now)
+            is_active = fields.BooleanField(default=True)
+            profile = fields.ToOneField(ProfileResource, 'profile')
+            notes = fields.ToManyField(NoteResource, 'notes', full=True)
+
+    So again the strategy is dynamic class generation. This code lives at [djangospecify/specify/api.py](https://github.com/benanhalt/djangospecify/blob/master/specify/api.py). The code is complicated somewhat by subclassing the TastyPie resource implementations to provide customized behavior, but the module remains quite concise and manageable.
+
+* Authentication:
+     It is desirable that the authentication system utilize the same user credentials as the current thick client. That has been achieved by implementing the same decryption protocol that is used to challenge user passwords against the encrypted versions stored in the `specifyusers` table. The relevant code is in [djangospecify/specify/encryption.py](https://github.com/benanhalt/djangospecify/blob/master/specify/encryption.py). And the code which interfaces it to the Django authentication system is found in [djangospecify/specify/authbackend.py](https://github.com/benanhalt/djangospecify/blob/master/specify/authbackend.py).
