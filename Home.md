@@ -30,3 +30,14 @@ The back end is implemented in Python and makes use of the Django framework for 
 
     The basic idea is to use the dynamic nature of Python to produce Model classes programmatically based on the XML description. For example, the above classes in Python could be rendered as follows:
 
+        Musician = type('Musician', (models.Model,), {
+            'first_name' : models.CharField(max_length=50),
+            'last_name' : models.CharField(max_length=50),
+            'instrument' : models.CharField(max_length=100)})
+
+        Album = type('Album', ....
+
+   If the literals are replaced with variables and the field objects instantiated by function dispatch, it is possible to straight forwardly turn the XML description of the schema into a set of objects that Django can understand.
+
+   The code that does so is in [djangospecify/specify/models.py](https://github.com/benanhalt/djangospecify/blob/master/specify/models.py).
+
