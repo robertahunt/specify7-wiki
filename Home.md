@@ -82,7 +82,7 @@ The overall front end naturally breaks down into several subsystems among which 
     Interaction with resources provided by the back end should be treated as an independent component. Currently the implementation is scattered through out the other components, so a near term goal will be to factor out this subsystem.
 
 * **Form validation:**
-    As users interact with the app, there actions should be validated as early as possible and useful feedback delivered regarding invalid input. I have not yet addressed this component.
+    As users interact with the app, their actions should be validated as early as possible and useful feedback delivered regarding invalid input. I have not yet addressed this component.
 
 * **UI polish:**
     Beyond providing basic operations, there will be the need for the UI to support various user experience enhancements. This includes things like collapsible sub-forms, tabbing order across fields, the possibility of hot keys, etc. Ideally, these enhancements should exist as a separate component that modifies a fully-functional sub-layer. I have made only minimal investigations on this front. See [djangospecify/specify/static/specifyui.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/specifyui.js).
