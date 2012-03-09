@@ -72,3 +72,18 @@ The overall front end naturally breaks down into several subsystems among which 
 
 * **Form population:**
     Form population consists of filling in the controls on a page with the data from a API resource object. This includes setting up control widgets (e.g. pick lists and combo boxes) and applying formatting to the raw field data. Again, separation-of-concerns should be respected here. As a dynamic portion of the application, the only interaction with the static form descriptions must occur through the HTML produced by the form generation subsystem. The generated forms must contain all necessary information to allow the various fragments to be assembled, and all control widgets to be configured.
+
+    Most of the code related to form population currently resides in [djangospecify/specify/static/populateform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/populateform.js).
+
+* **Form harvesting:**
+    The inverse of form population. [djangospecify/specify/static/putform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/putform.js).
+
+* **API interaction:**
+    Interaction with resources provided by the back end should be treated as an independent component. Currently the implementation is scattered through out the other components, so a near term goal will be to factor out this subsystem.
+
+* **Form validation:**
+    As users interact with the app, there actions should be validated as early as possible and useful feedback delivered regarding invalid input. I have not yet addressed this component.
+
+* **UI polish:**
+    Beyond providing basic operations, there will be the need for the UI to support various user experience enhancements. This includes things like collapsible sub-forms, tabbing order across fields, the possibility of hot keys, etc. Ideally, these enhancements should exist as a separate component that modifies a fully-functional sub-layer. I have made only minimal investigations on this front. See [djangospecify/specify/static/specifyui.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/specifyui.js).
+
