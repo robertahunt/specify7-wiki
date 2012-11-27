@@ -1,4 +1,4 @@
-# Welcome to the djangospecify wiki!
+# Welcome to the specifyweb wiki!
 
 The purpose of this page is to provide an overview of the code for those who would like to understand its workings.
 
@@ -39,7 +39,7 @@ The back end is implemented in Python and makes use of the Django framework for 
 
     If the literals are replaced with variables and the field objects instantiated by function dispatch, it is possible to straight forwardly turn the XML description of the schema into a set of objects that Django can understand.
 
-    The code that does so is in [djangospecify/specify/models.py](https://github.com/benanhalt/djangospecify/blob/master/specify/models.py).
+    The code that does so is in [specifyweb/specify/models.py](https://github.com/benanhalt/specifyweb/blob/master/specify/models.py).
 
 * **The API layer:**
     The API generation is based around the [TastyPie](https://github.com/toastdriven/django-tastypie) library. The idea is much the same as before. Traditionally each resource would be described to TastyPie by a Python class. E.g. from [the docs](http://django-tastypie.readthedocs.org/en/latest/fields.html):
@@ -52,10 +52,10 @@ The back end is implemented in Python and makes use of the Django framework for 
             profile = fields.ToOneField(ProfileResource, 'profile')
             notes = fields.ToManyField(NoteResource, 'notes', full=True)
 
-    So again the strategy is dynamic class generation. This code lives at [djangospecify/specify/api.py](https://github.com/benanhalt/djangospecify/blob/master/specify/api.py). The code is complicated somewhat by subclassing the TastyPie resource implementations to provide customized behavior, but the module remains quite concise and manageable.
+    So again the strategy is dynamic class generation. This code lives at [specifyweb/specify/api.py](https://github.com/benanhalt/specifyweb/blob/master/specify/api.py). The code is complicated somewhat by subclassing the TastyPie resource implementations to provide customized behavior, but the module remains quite concise and manageable.
 
 * **Authentication:**
-     It is desirable that the authentication system utilize the same user credentials as the current thick client. That has been achieved by implementing the same decryption protocol that is used to challenge user passwords against the encrypted versions stored in the `specifyusers` table. The relevant code is in [djangospecify/specify/encryption.py](https://github.com/benanhalt/djangospecify/blob/master/specify/encryption.py). And the code which interfaces it to the Django authentication system is found in [djangospecify/specify/authbackend.py](https://github.com/benanhalt/djangospecify/blob/master/specify/authbackend.py).
+     It is desirable that the authentication system utilize the same user credentials as the current thick client. That has been achieved by implementing the same decryption protocol that is used to challenge user passwords against the encrypted versions stored in the `specifyusers` table. The relevant code is in [specifyweb/specify/encryption.py](https://github.com/benanhalt/specifyweb/blob/master/specify/encryption.py). And the code which interfaces it to the Django authentication system is found in [specifyweb/specify/authbackend.py](https://github.com/benanhalt/specifyweb/blob/master/specify/authbackend.py).
 
 ### The front end
 
@@ -68,15 +68,15 @@ The overall front end naturally breaks down into several subsystems among which 
 * **Form generation:**
     Form generation should be possible as a purely static process. That is, the existing static XML resources describing the UI ought to be sufficient to produce completely isomorphic HTML documents (or document fragments that can be assembled without access to the original resources) without any dynamic information. This allows the HTML UI to be generated ahead of time and cached if required for performance reasons. It also makes it possible to build tests for the form generation system that can verify predictable behavior over the course of development. Finally, it permits reuse of this component outside of the broader app, perhaps facilitating a JSF or other implementation.
 
-    At present the front end code is changing rapidly, but most of the form generation implementation can be found in [djangospecify/specify/static/specifyform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/specifyform.js).
+    At present the front end code is changing rapidly, but most of the form generation implementation can be found in [specifyweb/specify/static/specifyform.js](https://github.com/benanhalt/specifyweb/blob/master/specify/static/specifyform.js).
 
 * **Form population:**
     Form population consists of filling in the controls on a page with the data from a API resource object. This includes setting up control widgets (e.g. pick lists and combo boxes) and applying formatting to the raw field data. Again, separation-of-concerns should be respected here. As a dynamic portion of the application, the only interaction with the static form descriptions must occur through the HTML produced by the form generation subsystem. The generated forms must contain all necessary information to allow the various fragments to be assembled, and all control widgets to be configured.
 
-    Most of the code related to form population currently resides in [djangospecify/specify/static/populateform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/populateform.js).
+    Most of the code related to form population currently resides in [specifyweb/specify/static/populateform.js](https://github.com/benanhalt/specifyweb/blob/master/specify/static/populateform.js).
 
 * **Form harvesting:**
-    The inverse of form population. [djangospecify/specify/static/putform.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/putform.js).
+    The inverse of form population. [specifyweb/specify/static/putform.js](https://github.com/benanhalt/specifyweb/blob/master/specify/static/putform.js).
 
 * **API interaction:**
     Interaction with resources provided by the back end should be treated as an independent component. Currently the implementation is scattered through out the other components, so a near term goal will be to factor out this subsystem.
@@ -85,5 +85,5 @@ The overall front end naturally breaks down into several subsystems among which 
     As users interact with the app, their actions should be validated as early as possible and useful feedback delivered regarding invalid input. I have not yet addressed this component.
 
 * **UI polish:**
-    Beyond providing basic operations, there will be the need for the UI to support various user experience enhancements. This includes things like collapsible sub-forms, tabbing order across fields, the possibility of hot keys, etc. Ideally, these enhancements should exist as a separate component that modifies a fully-functional sub-layer. I have made only minimal investigations on this front. See [djangospecify/specify/static/specifyui.js](https://github.com/benanhalt/djangospecify/blob/master/specify/static/specifyui.js).
+    Beyond providing basic operations, there will be the need for the UI to support various user experience enhancements. This includes things like collapsible sub-forms, tabbing order across fields, the possibility of hot keys, etc. Ideally, these enhancements should exist as a separate component that modifies a fully-functional sub-layer. I have made only minimal investigations on this front. See [specifyweb/specify/static/specifyui.js](https://github.com/benanhalt/specifyweb/blob/master/specify/static/specifyui.js).
 
