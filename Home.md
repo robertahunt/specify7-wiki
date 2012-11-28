@@ -32,20 +32,21 @@ resources.
     from the
     [Django Documentation](https://docs.djangoproject.com/en/1.3/topics/db/models/):
 
-        class Musician(models.Model): first_name =
-            models.CharField(max_length=50) last_name =
-            models.CharField(max_length=50) instrument =
-            models.CharField(max_length=100)
+        class Musician(models.Model):
+            first_name = models.CharField(max_length=50)
+            last_name = models.CharField(max_length=50)
+            instrument = models.CharField(max_length=100)
 
-        class Album(models.Model): artist =
-            models.ForeignKey(Musician) name =
-            models.CharField(max_length=100) release_date =
-            models.DateField() num_stars = models.IntegerField()
+        class Album(models.Model):
+            artist = models.ForeignKey(Musician)
+            name = models.CharField(max_length=100)
+            release_date = models.DateField()
+            num_stars = models.IntegerField()
 
     In the case of Specify there are about 170 tables in the
     schema. Writing a class for each one is possible, but there is a
     better way. The existing thick client makes use of an
-    automatically generated `specify_datamodel.xml' file which
+    automatically generated `specify_datamodel.xml` file which
     completely describes the schema, including named implicit
     (i.e. many-to-many) and reverse relationships that cannot be
     discovered through pure database introspection. This file can be
@@ -55,10 +56,10 @@ resources.
     Model classes programmatically based on the XML description. For
     example, the above classes in Python could be rendered as follows:
 
-        Musician = type('Musician', (models.Model,), { 'first_name' :
-            models.CharField(max_length=50), 'last_name' :
-            models.CharField(max_length=50), 'instrument' :
-            models.CharField(max_length=100)})
+        Musician = type('Musician', (models.Model,), {
+            'first_name' : models.CharField(max_length=50),
+            'last_name' : models.CharField(max_length=50),
+            'instrument' : models.CharField(max_length=100)})
 
         Album = type('Album', ....
 
@@ -72,41 +73,19 @@ resources.
 
 * **The API layer:**
 
-    The API generation is based around the
-    [TastyPie](https://github.com/toastdriven/django-tastypie)
-    library. The idea is much the same as before. Traditionally each
-    resource would be described to TastyPie by a Python
-    class. E.g. from
-    [the docs](http://django-tastypie.readthedocs.org/en/latest/fields.html):
-
-        class PersonResource(Resource): name =
-            fields.CharField(attribute='name') age =
-            fields.IntegerField(attribute='years_old', null=True)
-            created = fields.DateTimeField(readonly=True,
-            default=utils.now) is_active =
-            fields.BooleanField(default=True) profile =
-            fields.ToOneField(ProfileResource, 'profile') notes =
-            fields.ToManyField(NoteResource, 'notes', full=True)
-
-    So again the strategy is dynamic class generation. This code lives
-    at
-    [specifyweb/specify/api.py](https://github.com/benanhalt/specifyweb/blob/master/specify/api.py). The
-    code is complicated somewhat by subclassing the TastyPie resource
-    implementations to provide customized behavior, but the module
-    remains quite concise and manageable.
 
 * **Authentication:**
 
     It is desirable that the authentication system
-     utilize the same user credentials as the current thick
-     client. That has been achieved by implementing the same
-     decryption protocol that is used to challenge user passwords
-     against the encrypted versions stored in the `specifyusers`
-     table. The relevant code is in
-     [specifyweb/specify/encryption.py](https://github.com/benanhalt/specifyweb/blob/master/specify/encryption.py). And
-     the code which interfaces it to the Django authentication system
-     is found in
-     [specifyweb/specify/authbackend.py](https://github.com/benanhalt/specifyweb/blob/master/specify/authbackend.py).
+    utilize the same user credentials as the current thick
+    client. That has been achieved by implementing the same
+    decryption protocol that is used to challenge user passwords
+    against the encrypted versions stored in the `specifyusers`
+    table. The relevant code is in
+    [specifyweb/specify/encryption.py](https://github.com/benanhalt/specifyweb/blob/master/specify/encryption.py). And
+    the code which interfaces it to the Django authentication system
+    is found in
+    [specifyweb/specify/authbackend.py](https://github.com/benanhalt/specifyweb/blob/master/specify/authbackend.py).
 
 ### The front end
 
@@ -194,4 +173,3 @@ follows:
     component that modifies a fully-functional sub-layer. I have made
     only minimal investigations on this front. See
     [specifyweb/specify/static/specifyui.js](https://github.com/benanhalt/specifyweb/blob/master/specify/static/specifyui.js).
-
