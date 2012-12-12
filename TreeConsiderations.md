@@ -20,7 +20,7 @@ sub-tree are related by having consecutive numbers. Thus, a sub-tree
 query becomes a range query.
 
 The disadvantage of this approach is that it moves the complication
-from query time to update time. Anytime the tree structure is
+from query time to update time. Whenever the tree structure is
 changed, non local updates must be performed to keep the information in
 the node numbers current. Where ease of updates is a priority over
 ease of queries, this approach is inappropriate. This has been the
