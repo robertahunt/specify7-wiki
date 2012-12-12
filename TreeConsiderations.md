@@ -48,7 +48,7 @@ cache is delegated to an encapsulated module which notices mutations
 of the tree and updates the cache accordingly. This update module can
 run asynchronously in a separate thread or process.
 
-With the cache in place sub-tree queries become even simpler than with
+With the cache in place, sub-tree queries become even simpler than with
 node numbers. To find all descendants of a given target node, it
 suffices to find those nodes whose paths have the target node's path
 as a prefix, that is, with an SQL `LIKE` clause. The ancestors of a
