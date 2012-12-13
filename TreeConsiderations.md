@@ -66,3 +66,27 @@ decoupled nature of the solution admits the possibility of simply
 disposing of a cache and waiting for it to be repopulated.
 
 
+## Alternative implementation ##
+
+Here is another way that the same idea could be accomplished that is
+simpler. It does away with the auxillary table, storing the path in
+the tree node itself, but keeps the independent updater.
+
+Suppose each tree table has added to it a `Path` column to store a CSV
+representation of the ids of all nodes on the path from the root to
+the node in question. Local discrepancies in the tree can be found by
+comparing each node's path to the path of its parent. If a
+inconsistent node is found and its path updated to reflect its parent,
+that will create discrepancies with its own children which can be
+detected in exactly the same way. Thus, repeated application of this
+process results in waves of updates which propagate leaf ward from any
+mutation in the tree. Moreover, it can be seen that the only stable
+state is one in which the paths are all consistent. Since the updates
+propagate in one direction only, induction guarantees consistency will
+obtain (barring circular paths!).
+
+    update taxon
+    left outer join taxon as parent on (taxon.ParentID = parent.TaxonID)
+    set   taxon.Path  = concat(ifnull(parent.path, ''), taxon.TaxonID, ',')
+    where taxon.Path != concat(ifnull(parent.path, ''), taxon.TaxonID, ',')
+    or taxon.Path is null;
