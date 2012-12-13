@@ -70,7 +70,7 @@ disposing of a cache and waiting for it to be repopulated.
 
 Here is another way that the same idea could be accomplished that is
 simpler. It does away with the auxillary table, storing the path in
-the tree node itself, but keeps the independent updater.
+the tree node itself, but keeps the independent asynchronous updater.
 
 Suppose each tree table has added to it a `Path` column to store a CSV
 representation of the ids of all nodes on the path from the root to
@@ -87,6 +87,6 @@ obtain (barring circular paths!).
 
     update taxon
     left outer join taxon as parent on (taxon.ParentID = parent.TaxonID)
-    set   taxon.Path  = concat(ifnull(parent.path, ''), taxon.TaxonID, ',')
-    where taxon.Path != concat(ifnull(parent.path, ''), taxon.TaxonID, ',')
+    set   taxon.Path  = concat(ifnull(parent.Path, ''), taxon.TaxonID, ',')
+    where taxon.Path != concat(ifnull(parent.Path, ''), taxon.TaxonID, ',')
     or taxon.Path is null;
