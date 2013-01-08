@@ -8,8 +8,8 @@ In which are described points of interest in the source code tree.
 * **context/** - the AppContext subsystem. Views, etc.
 * **expresss_search/** - search subsystem.
 * **hibernateboolsbackend/** - make Django understand how Hibernate stores bools
-* **specify/** - the data API and front-end static files
-
+* **specify/** - the data API
+* **frontend/** - front-end static files
 * **manage.py** - the Django management script
 * **r.js** - the `requirejs` library's optimizer
 * **settings.py** - the main Django settings for the project
@@ -18,10 +18,8 @@ In which are described points of interest in the source code tree.
 * **todo_overview.org** - higher level stuff that needs doing
 * **urls.py** - tells Django how to handle different URLs
 
-
 ## specifyweb/context ##
 * **data/** - basically mocked-up data for testing purposes
-
 * **app_resource.py** - logic for finding App Resources
 * **middleware.py** - adds information about the specify user to incoming requests
 * **schema_localization.py** - provide the proper SL to the frontend
@@ -38,9 +36,6 @@ In which are described points of interest in the source code tree.
 
 ## specifyweb/specify ##
 * **fixtures/** - data for tests
-* **static/** - statically served files, i.e. the complete front end
-* **templates/** - Django templates, minimally used.
-
 * **api.py** - implements the RESTful business data API
 * **api_tests.py** - tests for the above
 * **authbackend.py** - tells Django how to authenticate using the exist Specify users
@@ -51,15 +46,19 @@ In which are described points of interest in the source code tree.
 * **selenium_tests.py** - browser automation testing
 * **tests.py** - test suite entry point
 * **uiformatters.py** - supports autonumbering mechanism
-* **urls.py** - just provide a URL that servers the container for the front end
 * **views.py** - a few non-business data resource end points
 
-### specifyweb/specify/static ###
+## specifyweb/frontend ##
+* **static/** - statically served files, i.e. the complete front end
+* **templates/** - Django templates, minimally used.
+* **urls.py** - just provide a URL that serves the HTML container for the front end
+
+### specifyweb/frontend/static ###
 * **css/** - stylesheets
 * **html/** - mostly templates used by the front end to build the UI
 * **img/** - UI images
 * **js/** - the frontend code
 
-#### specifyweb/specify/static/js ####
+#### specifyweb/frontend/static/js ####
 * **tests/** - frontend tests
 * **vendor/** - javascript libs
