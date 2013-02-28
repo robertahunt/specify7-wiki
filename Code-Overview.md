@@ -115,7 +115,7 @@ The web app is essentially a system which takes a URI pointing to a resource and
 based UI representing the data in that resource. Behaviors are attached to the rendered form that
 permit the data to be modified and relationships to be navigated.
 
-(images/specify_webapp_frontend.png)
+![](images/specify_webapp_frontend.png?raw=true)
 
 The figure presents the architecture of the front-end in simplified schematic form. Rendering
 proceeds mainly from top to bottom.
