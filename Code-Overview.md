@@ -11,8 +11,7 @@ Third-Party Technology
 A few Javascript libraries are utilized in the front-end. A basic understanding of these is necessary
 to understand the Specify web app code.
 
-JQuery
-------
+### JQuery
 
 [JQuery](http://docs.jquery.com/Main_Page) is heavily relied upon in
 this application. It is used for DOM manipulation of the user visible
@@ -30,13 +29,12 @@ essential for working with this code base.
 The ajax requests to the back-end server are also brokered by JQuery.
 
 
-RequireJS
----------
+### RequireJS
 
 The web app is of sufficient complexity that it is necessary to organize the code into separate
 modules encapsulating logically separate concerns. Currently lacking a built-in module system,
 Javascript benefits from the use of libraries to provide this functionality. I have
-chosen (http://requirejs.org/)[RequireJS] for use in this project.
+chosen [RequireJS](http://requirejs.org/) for use in this project.
 
 For a cursory understanding of the code base it is probably sufficient to understand how a module
 definition is structured when using RequireJS. Most of the javascript files in this project take the
@@ -70,21 +68,19 @@ import specifyapi as api
 Given this structure, RequireJS ensures that all the necessary `.js`  files are loaded
 by the browser before the code is interpreted.
 
-UnderscoreJS
-------------
+### UnderscoreJS
 
-(http://documentcloud.github.com/underscore/)[UnderscoreJS] is a utility library that
+[UnderscoreJS](http://documentcloud.github.com/underscore/) is a utility library that
 abstracts away many of the rough edges of Javascript in much the same way that JQuery abstracts away
 complexities in the browser DOM interface. It also makes use of the familiar JQuery style whereby an
 object is *wrapped* to provide extended functionality. Thus, if ` foo ` is an object,
 then ` _(foo) ` is a wrapped object with special sauce.
 
-Backbone.js
------------
+### Backbone.js
 
 Resources that are fetched from the back-end must be represented in data structures in
 Javascript. These structures then become associated with various UI elements in the
-DOM. (http://documentcloud.github.com/backbone/)[Backbone] provides a standard set of
+DOM. [Backbone](http://documentcloud.github.com/backbone/) provides a standard set of
 abstractions based around a MVC pattern that can be used to structure these data and UI
 interactions. The main abstractions provided and their use in this application are as follows:
 
@@ -99,7 +95,7 @@ interactions. The main abstractions provided and their use in this application a
       Sadly, the term *Model* is highly overloaded in this project and is used more-or-less
       interchangeably along with *Resource* to mean a variety of things. The situation for *View*
       and *Form* is similarly fraught.
-      
+
 * Collections
       Essentially these represent collections of Models. Predominately these are used
       to represent one-to-many collections, record sets, querycbx search results and the like.
@@ -118,7 +114,8 @@ Architecture and Flow
 The web app is essentially a system which takes a URI pointing to a resource and renders a form
 based UI representing the data in that resource. Behaviors are attached to the rendered form that
 permit the data to be modified and relationships to be navigated.
-<img src="/static/img/specify_webapp_frontend.png">
+
+(images/specify_webapp_frontend.png)
 
 The figure presents the architecture of the front-end in simplified schematic form. Rendering
 proceeds mainly from top to bottom.
@@ -138,8 +135,8 @@ proceeds mainly from top to bottom.
     will eventually become available in the form of linked Backbone models and collections. The code
     base uses *resource* and *model* somewhat interchangeably to refer to these structures.
 
-Aside regarding deferreds and `rget`
--------------------------------------
+#### Aside regarding deferreds and `rget`
+
 Because the resources are ultimately being retrieved asynchronously from the server, the api
 code in general returns deferred promises so that the UI can continue rendering and other
 resources can be fetched concurrently. The resources that are returned are specialized Backbone
