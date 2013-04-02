@@ -1,7 +1,7 @@
 Using Django to Migrate Specify Database from MySQL to Postgres
 ===============================================================
 
-This is the procedure I followed. This is reconstructed from memory,
+This is the procedure I followed. It is reconstructed from memory;
 your mileage may vary.
 
 1. I used the Django1.5 branch of the Specify Webapp code which can be
@@ -9,9 +9,10 @@ your mileage may vary.
    [here](https://github.com/specify/specifyweb/tree/django1.5). Be
    aware that the setup instructions (README.md) have changed
    (hopefully for the simpler) and that it is probably easier to clone
-   another working copy rather than checking out the Django1.5 branch.
+   a new, clean working copy rather than checking-out on an existing 
+   working copy on the master branch.
    I've been reorganizing the directory layout and the settings files
-   get a bit wonky going between the master and django1.5 branch.
+   get a bit wonky going between the master and django1.5 branches.
 
 2. Once the webapp is working so that it is possible to use it to
    log in to an existing MySQL database, the Django `dumpdata` tool can
@@ -35,14 +36,14 @@ your mileage may vary.
 
        `sudo apt-get install python-psycopg2`
 
-5. In `setting/local_specify_settings.py` adjusted the database name and login
+5. In `setting/local_specify_settings.py` adjust the database name and login
    values to match those of the new Postgres database.
 
 6. Tell Django to create the Specify schema in the database:
    `./manage.sh syncdb`.
 
 7. At this point I tried populating the database from the JSON file,
-   but it choked on some dates. For some reason it serialized all date
+   but it choked on some dates. For some reason it serialized all dates
    without times as `YYYY-MM-DDT00:00:00` but only wants to
    deserialize dates like `YYYY-MM-DD`. Since the import takes a long
    time and you probably don't want to have to restart it, I would go
