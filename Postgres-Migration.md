@@ -29,6 +29,9 @@ your mileage may vary.
 4. In `setting/local_specify_settings.py` adjust the database name and login
    values to match those of the new Postgres database.
 
+5. Comment out the `check_versions` line  in `specify/models.py` so it won't
+   bail out when it doesn't find an `spversion` table in the new empty DB.
+
 5. Tell Django to create the Specify schema in the database:
    `./manage.sh syncdb`.
 
