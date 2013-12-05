@@ -2,9 +2,9 @@ JS-Optimization
 ===============
 
 To run the require.js optimizer to build a single JavaScript file for the frontend
-use the following command in the top level directory of the source tree:
+use the following command in the `specifyweb` directory of the source tree:
 
-    node tools/r.js -o frontend/static/js/app.build.js
+    node ../tools/r.js -o frontend/static/js/app.build.js
     
 This will produce the file `frontend/static/js/main-built.js` which can be
-substituted for `main.js` in `frontend/templates/form.html`.
+substituted for `main.js` in `frontend/templates/specify.html`.
