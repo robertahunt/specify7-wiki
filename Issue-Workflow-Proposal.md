@@ -20,7 +20,12 @@ This set of labels can be extended on as needed basis.
 ## Milestones
 GitHub [milestones](https://github.com/specify/specify7/milestones) should be used to organize issues resolutions into releases. Issues assigned to **prerelease** are those to be considered for the closest upcoming release. Issues which are to be deferred to the following release should be assigned to **next-release**. Other issues should not be assigned to any milestone to indicate unspecified future release.
 
-Milestones will be managed across releases as follows. Any unresolved issues in **prerelease** will be reassigned to **next-release**. The **prerelease** milestone will be renamed with the release version and closed. The **next-release** milestone will be renamed as the new **prerelease**, and a new **next-release** milestone will be created.
+Milestones will be managed across releases as follows: 
+
+* Any unresolved issues in **prerelease** will be reassigned to **next-release**.
+* The **prerelease** milestone will be renamed with the release version and closed.
+* The **next-release** milestone will be renamed as the new **prerelease**.
+* A new **next-release** milestone will be created.
 
 ## Issue Resolution Workflow
 [Open issues](https://github.com/specify/specify7/issues?q=is%3Aopen+is%3Aissue+milestone%3Aprerelease) in **prerelease** should be addressed by a team member according to priority. Once a solution to the issue has been committed, the issue will be *closed*.
