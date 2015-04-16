@@ -9,7 +9,7 @@ database using Specify 6.
 To protect the MySQL connection between the server and the Specify 6
 client, the connection will be tunnelled through an SSH connection.
 
-The first step is to request a SSH user from
+The first step is to request an SSH user from
 [Specify support](specify@ku.edu). We will need an SSH public key from
 each machine that will be connecting to the server.
 
@@ -42,11 +42,11 @@ For example,
 ssh -N -L3307:10.132.218.32:3306 demo@demo.specifycloud.org
 ```
 
-If the public key was setup correctly, you will not be prompted for a
+If the public key was setup correctly you will not be prompted for a
 password, and an SSH connection will be started. The tunnel will
 remain open until `Ctrl-C` is pressed. The tunnel may be left open
 between Specify 6 sessions, although if network connectivity is
-lossed, it may hang.
+lost the connection may hang.
 
 #### Windows
 
@@ -62,7 +62,7 @@ key. In Specify 7 click on your user name and select *Generate Specify
 user password before the key is generated. This key will be valid
 until the user or master password is changed.
 
-### Logining in with Specify 6
+### Loging in with Specify 6
 
 In the Specify 6 login dialog select *More Information* and fill out
 the fields as follows:
