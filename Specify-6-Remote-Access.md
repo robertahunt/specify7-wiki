@@ -19,7 +19,8 @@ On Linux and Mac systems the SSH public key can be found in
 `.ssh/id_rsa.pub` in the user's home directory. If this file does not
 exist, it can be created with the `ssh-keygen` command.
 
-Windows instructions TBD.
+On Windows, download putty.exe and puttygen.exe from here: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
+Put these files into a place you can remember, such as "C:\Users\username\My Documents\SpecifySSHTunnel". Run the puttygen.exe file and click generate. Follow the on-screen instructions until you have generated a public and private key. Once the keys are generated, click "Save public key". This is the file that will be sent to us. Then, click "Save private key".
 
 ### Opening the tunnel
 
@@ -50,7 +51,25 @@ lost the connection may hang.
 
 #### Windows
 
-TBD
+Right click on putty.exe and click "Create shortcut". Right click on the shortcut file and click "Properties". Add this to the end of the "Target" field:
+
+```
+-ssh -i yourprivatekeyfile.ppk [SSH user]@[your specify cloud domain] -L 3307:10.132.218.32:3306 -N
+```
+
+For example, the "Target" field will look something like this:
+
+```
+"C:\Users\d123w969\My Documents\SpecifySSHTunnel\putty.exe" -ssh -i privatekey.ppk demo@demo.specifycloud.org -L 3307:10.132.218.32:3306 -N
+```
+
+Click OK to apply the changes to the shortcut file. Now, if you'd like, you can move this shortcut to a more convenient place like your desktop or your start menu.
+
+Double click on the shortcut. If the public and private keys were setup correctly, you will not be prompted for a
+password, and an SSH connection will be started. The tunnel will
+remain open until the PuTTY window is closed. The tunnel may be left open
+between Specify 6 sessions, although if network connectivity is
+lost the connection may hang.
 
 ## Starting Specify 6
 
