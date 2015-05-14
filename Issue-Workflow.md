@@ -35,7 +35,7 @@ Milestones will be managed across releases as follows:
 * **res:invalid** - The situation described by the issue doesn't require any action.
 * **res:not-reproducible** - The problem described by the issue cannot be reproduced.
 
-[Unresolved closed issues](https://github.com/specify/specify7/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3Aprerelease+is%3Aclosed+-label%3Aresolved) should be verified as being resolved by QA staff and either labeled **resolved** or *re-opened*. If *re-opened*, the reason-for-closing label should be removed.
+[Unresolved closed issues](https://github.com/specify/specify7/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3Aprerelease+is%3Aclosed+-label%3Averified) should be verified as being resolved by QA staff and either labeled **resolved** or *re-opened*. If *re-opened*, the reason-for-closing label should be removed.
 
 ## Reporting
 In the interest of continuity, a live Bugzilla style [report](https://rawgit.com/benanhalt/3224d141f93c6e1da05c/raw/specify7-issues.html) can be generated from a [script](https://gist.github.com/benanhalt/3224d141f93c6e1da05c) using the GitHub API. The report is organized according to the release schedule and sorted by resolution, status and priority. 
