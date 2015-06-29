@@ -1,2 +1,1 @@
-Troubleshooting Information
-##
+# Troubleshooting Information
