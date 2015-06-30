@@ -8,6 +8,8 @@ This proposal puts forward the possibility of using the GitHub issue tracker for
 * **type:bug** - The issue describes incorrect behavior of the product.
 * **type:enhance** - The issue describes improvements or extensions to existing behavior.
 * **type:design** - The issue describes behavior that requires a design decision to be resolved.
+* **type:housekeeping** - The issue describes a code clean-up or similar task.
+* **type:meta** - The issue describes a task related to the project workflow.
 
 ### Priority Labels
 * **pri:block** - The issue must be resolved before releasing even if entered after a freeze.
