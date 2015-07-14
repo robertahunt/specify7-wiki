@@ -4,7 +4,7 @@ multiple Specify databases from a single server. The technique
 involves using Apache *mod_macro* to abstract over the server name in
 the Apache conf file, and mapping the server name to the database name
 in the *wsgi* config file so that it can be substituted into the
-`DATABASE_NAME` setting in the Django `settings.py` file.
+`DATABASE_NAME` setting in the Django *settings.py* file.
 
 ## mod_macro
 For this technique Apache *mod_macro* will need to be installed and
@@ -69,7 +69,7 @@ Use SpecifyVH ornithology
 ```
 
 This configuration creates a macro that is abstracted over the
-variable name $servername. The `Use` directives at the end instantiate
+variable `$servername`. The *Use* directives at the end instantiate
 the macro with twelve values for the server name producing twelve
 separate name based virtual hosts. Each virtual host creates a
 separate WSGI process and separate log files.
