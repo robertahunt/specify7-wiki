@@ -107,7 +107,7 @@ Create a `specifyweb_apache.conf` file in
 `/etc/httpd/conf.d` with the following content, adjusting the paths as
 necessary.
 
-```apache.conf
+```aconf
 <VirtualHost *:80>
         <Directory />
            Require all granted
@@ -141,5 +141,5 @@ where Specify 7 is installed.
 chmod a+rx ~
 ```
 
-And, if SELinux is enabled there may be other permissions issues that
+And if SELinux is enabled, there may be other permissions issues that
 are beyond the scope of this document.
