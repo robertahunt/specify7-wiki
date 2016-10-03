@@ -14,6 +14,10 @@ sudo yum install make automake gcc
 sudo yum install mariadb-server
 ```
 
+As root:
+
+`curl -sL https://rpm.nodesource.com/setup_4.x | bash -`
+
 ## Fetch the Specify 7 release.
 
 ```
@@ -25,7 +29,7 @@ git checkout release
 ## Install python dependencies.
 
 You can use a Python virtual environment or run the following with
-sudo to install systemwide.
+sudo to install system wide.
 
 ```
 pip install -r requirements.txt
@@ -38,6 +42,15 @@ E.g.
 ```
 scp -r Specify6.6.02 root@45.55.47.246:/opt
 ```
+
+Generate the front end.
+-----------------------
+The Javascript dependencies and sources for the browser need to be
+packaged.
+
+    make -C specify7
+
+When the Specify7 repository is updated, this step should be repeated.
 
 ### MySQL (MariaDB)
 
@@ -85,22 +98,6 @@ following packages are needed:
 ```
 sudo yum install httpd mod_wsgi
 ```
-
-
-## Optimizing JS and CSS files.
-The Javascript and CSS files that comprise the web app can be
-optimized by *requirejs*. Then, instead of serving each file
-separately, they are packaged into single optimized `main-built.js`
-and `main-built.css` files.
-
-This requires *NodeJS* to be installed.
-
-```
-sudo yum install nodejs
-make -C specify7/specifyweb
-```
-
-When the Specify7 repository is updated, this step should be repeated.
 
 ## Setup Apache.
 Create a `specifyweb_apache.conf` file in
