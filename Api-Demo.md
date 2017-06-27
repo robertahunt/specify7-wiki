@@ -38,12 +38,14 @@ Set-Cookie:  csrftoken=8BetyLjqobHb; expires=Thu, 12-Apr-2018 21:54:55 GMT; Max-
 
 To log in as a user of the API for one of the listed collections issue
 a PUT request to the same URL. The *csrftoken* from the previous
-response must be passed as a header.
+response must be passed as a header. The *Referer* header must be included
+when using HTTPS, but may be omitted when using HTTP.
 
 ```
 curl -i -c cookies.txt -b cookies.txt -X PUT \
     --data '{"username":"sp7demofish","password":"sp7demofish","collection":4}' \
     -H "X-CSRFToken: 8BetyLjqobHb" \
+    -H "Referer: http://localhost:8000/" \
     http://localhost:8000/context/login/
 ```
 
@@ -165,6 +167,7 @@ the username and password set to null.
 curl -i -c cookies.txt -b cookies.txt -X PUT \
     --data '{"username":null,"password":null,"collection":4}' \
     -H "X-CSRFToken: 44kms3gdg6" \
+    -H "Referer: http://localhost:8000/" \
     http://localhost:8000/context/login/
 ```
 
@@ -483,6 +486,7 @@ could be modified as follows:
 ```
 curl -b cookies.txt -X PUT \
     -H "X-CSRFToken: 44kms3gdg6" \
+    -H "Referer: http://localhost:8000/" \
     --data '{"version": 3, "remarks":"test"}' \
     http://localhost:8000/api/specify/agent/3/ \
         | python -m json.tool
@@ -502,6 +506,7 @@ URI representing the target table. To create a new collection object:
 ```
 curl -b cookies.txt -X POST \
     -H "X-CSRFToken: 44kms3gdg6" \
+    -H "Referer: http://localhost:8000/" \
     --data '{"collection":"/api/specify/collection/4/"}' \
     http://localhost:8000/api/specify/collectionobject/ \
         | python -m json.tool
@@ -520,6 +525,7 @@ placed in the `If-Match` HTTP header:
 curl -b cookies.txt -X DELETE \
     -H 'If-Match: 0' \
     -H "X-CSRFToken: 44kms3gdg6" \
+    -H "Referer: http://localhost:8000/" \
     http://localhost:8000/api/specify/collectionobject/123456789/
 ```
 
