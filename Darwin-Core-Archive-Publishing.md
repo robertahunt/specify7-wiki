@@ -1,8 +1,8 @@
 # Darwin Core Archive Publishing in Specify 7
 
 Publishing of DwCAs in Specify 7 is managed via several App Resource
-Records in XML format. These records can be accessed by admin users
-through the *Resources* option in the *User Tools* dialog that is
+records in XML format. These records can be accessed by admin users
+through the **Resources** option in the *User Tools* dialog that is
 opened by clicking on the user name, or by navigating to
 `/specify/appresources/` on a Specify 7 site.
 
@@ -11,7 +11,7 @@ and *Discipline* level resources and descending through *Collection*,
 *User Types*, and *User* levels. The various levels may be expanded or
 collapsed by clicking on the headings. At each level, individual
 resources can be opened by clicking on the name of the resource, and
-new resources can be added by clicking on *New Resource* and entering
+new resources can be added by clicking on **New Resource** and entering
 a resource name.
 
 ## Basic DwCA definition resource
@@ -35,11 +35,11 @@ appear in the generated `meta.xml` as described in the DCTG.
 
 Each *core* and *extension* element may contain multiple free standing
 *field* elements with `term` and `value` attributes. The `term` is the
-URI for term represented by the field, and `value` is a value for that
-term which is constant for all rows in the data set represented by the
-stanza. Aside from these constant values, the data for each row in the
-data set will be produced from one or more queries defined in the
-*query* stanza within each *core* and *extension* stanza.
+URI for the term represented by the field, and `value` is a value for
+that term which is the same for all rows in the data set represented
+by the stanza. Aside from these constant values, the data for each row
+in the data set will be produced from one or more queries defined in
+the *queries* stanza within each *core* and *extension* stanza.
 
 ### Example Specify 7 DwCA definition
 
@@ -152,12 +152,16 @@ data set will be produced from one or more queries defined in the
 ### Query stanzas
 
 The query stanzas within the DwCA definition are meant to be generated
-with the assistance of the Specify 7 query builder. After a query has
-been defined, tested, and saved through the query builder, it can be
-used as the basis for a query stanza. There is an *export* button in
-the edit dialog that appears when the pencil icon next to query name
-is clicked. The *export* button will open a dialog containing XML that
-can be copy-pasted into an editor for inclusion in a DwCA definition.
+with the assistance of the Specify 7 query builder. After a Specify
+query has been defined, tested, and saved using the query builder, it
+can be used as the basis for a query stanza. There is an **export**
+button in the edit dialog that appears when the pencil icon next to
+query name is clicked. The **export** button will open a dialog
+containing XML that can be copy-pasted into an editor for inclusion in
+a DwCA definition.
+
+After the XML export of the query has been copied, the Specify query
+can be deleted, if so desired.
 
 
 #### Example query export
@@ -176,20 +180,22 @@ can be copy-pasted into an editor for inclusion in a DwCA definition.
 
 ```
 
-This XML contains enough information to generate the rows for the DwCA
-file, but needs to be edited to include the `term` attribute for each
-field which should be a URI. Fields with do not specify a term will
-not be included in the output but maybe required for filtering within
-the query.
+The exported XML contains enough information to generate the rows for
+the DwCA file, but needs to be edited to include the `term` attribute
+for each field which should be a URI. Fields which do not specify a
+term will not be included in the output but maybe required for
+filtering within the query.
 
 It is also necessary for one of the fields to be designated the *core
 id* field by changing the element tag from `field` to `id`. This field
 will become the *id* field if included in the *core* stanza or the
-*coreId* field if included in an *extension* stanza. See the DCTG for
-more information about the id fields.
+*coreId* field if included in an *extension* stanza. 
+
+See the DCTG for more information about the *id* and *coreId* fields
+and `term` attributes.
 
 Finally, the `name` attribute should be adjusted to an appropriate
-file name for the corresponding CSV file that will be included in the
+filename for the corresponding CSV file that will be included in the
 DwCA file. That is, it should be unique within a given DwCA definition
 and not contain special characters.
 
@@ -199,14 +205,13 @@ copied into the `<queries>` element of a DwCA definition resource.
 ### Testing a DwCA definition resource
 
 After a DwCA definition resource has been created, it can be tested by
-instructing Specify to produce a DwCA file from it.
+instructing Specify to produce a DwCA file based on it.
 
 The user should be logged into the collection corresponding to the
-DwCA definition resource. Clicking on the user name followed by *Make
-DwCA* in *User Tools* opens a dialog that accepts a *DwCA definition*
-and a *Metadata resource*. Enter the name of the DwCA definition
-resource that was previously created in the *DwCA definition* field,
-and click start. The *Metadata resource* can be left blank. Specify
-will begin running the queries and generating the DwCA file. A
-notification with a link to download the archive will be produced when
-the process completes.
+DwCA definition resource. Clicking on the user name followed by **Make
+DwCA** in *User Tools* opens a dialog that accepts a **DwCA definition**
+and a **Metadata resource**. Enter the name of the DwCA definition
+resource in the **DwCA definition** field, and click start. The
+**Metadata resource** can be left blank. Specify will begin running the
+queries and generating the DwCA file. A notification with a link to
+download the archive will be produced when the process completes.
