@@ -27,19 +27,19 @@ New resources for DwCA definitions should be created under a particular
 *collection* level within the App Resource hierarchy corresponding to
 the collection whose data they will be used to export.
 
-The basic structure is a single *archive* element containing exactly
-one *core* stanza and optional *extension* stanzas, each of which must
-indicate the *rowType* that specifies the class of data represented by
-that stanza. This corresponds exactly to the *rowType* that will
+The basic structure is a single `<archive>` element containing exactly
+one `<core>` stanza and optional `<extension>` stanzas, each of which must
+indicate the `rowType` that specifies the class of data represented by
+that stanza. This corresponds exactly to the `rowType` that will
 appear in the generated `meta.xml` as described in the DCTG.
 
-Each *core* and *extension* element may contain multiple free standing
-*field* elements with `term` and `value` attributes. The `term` is the
+Each `<core>` and `<extension>` element may contain multiple free standing
+`<field>` elements with `term` and `value` attributes. The `term` is the
 URI for the term represented by the field, and `value` is a value for
 that term which is the same for all rows in the data set represented
 by the stanza. Aside from these constant values, the data for each row
 in the data set will be produced from one or more queries defined in
-the *queries* stanza within each *core* and *extension* stanza.
+the `<queries>` stanza within each `<core>` and `<extension>` stanza.
 
 ### Example Specify 7 DwCA definition
 
@@ -188,10 +188,10 @@ filtering within the query.
 
 It is also necessary for one of the fields to be designated the *core
 id* field by changing the element tag from `field` to `id`. This field
-will become the *id* field if included in the *core* stanza or the
-*coreId* field if included in an *extension* stanza. 
+will become the `<id>` field if included in the `<core>` stanza or the
+`<coreId>` field if included in an `<extension>` stanza. 
 
-See the DCTG for more information about the *id* and *coreId* fields
+See the DCTG for more information about the `<id>` and `<coreId>` fields
 and `term` attributes.
 
 Finally, the `name` attribute should be adjusted to an appropriate
