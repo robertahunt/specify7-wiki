@@ -368,10 +368,10 @@ its contents can be updated in two separate ways.
    the activating user rather than the user specified by the
    `notifyUserId` attribute.
    
-2. A command may be invoked on the Specify 7 server as follows from
+2. The following command may be invoked on the Specify 7 server from
    the Specify 7 installation directory:
    ```sh
-   python manage.py update_feed.py [--force]
+   python manage.py update_feed [--force]
    
    ```
    The `--force` option will cause all items in the feed to be updated
