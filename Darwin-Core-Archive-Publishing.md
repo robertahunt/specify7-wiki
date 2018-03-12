@@ -1,10 +1,36 @@
 # Darwin Core Archive Publishing in Specify 7
 
-Publishing of DwCAs in Specify 7 is managed via several App Resource
-records in XML format. These records can be accessed by admin users
-through the **Resources** option in the *User Tools* dialog that is
-opened by clicking on the user name, or by navigating to
-`/specify/appresources/` on a Specify 7 site.
+Specify 7 is capable of exporting collections data in the [Darwin Core
+Archive](https://en.wikipedia.org/wiki/Darwin_Core) format. This
+capability expands on the existing Specify 6 functionality by
+supporting extensions to the core format.
+
+Publishing of DwCAs in Specify 7 is managed via
+several [App Resource](#app-resource) records in XML format. There are
+three relevant types of
+resource: the
+[Basic DwCA definition resource](#basic-dwca-definition-resource), 
+the [Dataset metadata resource](#dataset-metadata-resource), and
+the [Export feed resource](#export-feed-resource).
+
+## Table of Contents
+
+1. [Darwin Core Archive Publishing in Specify 7](#darwin-core-archive-publishing-in-specify-7)
+2. [App resources](#app-resources)
+3. [Basic DwCA definition resource](#basic-dwca-definition-resource)
+   1. [Example Specify 7 DwCA definition](#example-specify-7-dwca-definition)
+   2. [Query stanzas](#query-stanzas)
+      1. [Example query export](#example-query-export)
+   3. [Testing a DwCA definition resource](#testing-a-dwca-definition-resource)
+4. [Dataset metadata resource](#dataset-metadata-resource)
+5. [Export feed resource](#export-feed-resource)
+
+## App resources
+
+App resources can be accessed by admin users through the **Resources**
+option in the *User Tools* dialog that is opened by clicking on the
+user name, or by navigating to `/specify/appresources/` on a Specify 7
+site.
 
 The App Resources are organized hierarchically starting with *Global*
 and *Discipline* level resources and descending through *Collection*,
