@@ -24,12 +24,16 @@ the [Export feed resource](#export-feed-resource).
    3. [Testing a DwCA definition resource](#testing-a-dwca-definition-resource)
 4. [Dataset metadata resource](#dataset-metadata-resource)
 5. [Export feed resource](#export-feed-resource)
-
+   1. [Example Specify 7 export feed resource](#example-specify-7-export-feed-resource)
+   2. [Export feed endpoint](#export-feed-endpoint)
+6. [Updating the data publishing feed](#updating-the-data-publishing-feed)
+   
+   
 ## App resources
 
 App resources can be accessed by admin users through the **Resources**
 option in the *User Tools* dialog that is opened by clicking on the
-user name, or by navigating to `/specify/appresources/` on a Specify 7
+user name, or by navigating to `http://SITE/specify/appresources/` on a Specify 7
 site.
 
 The App Resources are organized hierarchically starting with *Global*
@@ -241,3 +245,143 @@ resource in the **DwCA definition** field, and click start. The
 **Metadata resource** can be left blank. Specify will begin running the
 queries and generating the DwCA file. A notification with a link to
 download the archive will be produced when the process completes.
+
+## Dataset metadata resource
+
+Specify 7 can include a metadata file in generated DwCA files
+describing the whole dataset
+in
+[Ecological Metadata Language](https://en.wikipedia.org/wiki/Ecological_Metadata_Language).
+Like the DwCA definition resource, the metadata resource should be
+created at the *collection* level of the resource hierachy.
+
+When generating a DwCA
+as [described above](#testing-a-dwca-definition-resource), the name of
+a metadata resource can be provided. The contents of the resource will
+be included in the generated DwCA unchanged except for `pubDate` which
+will be updated to reflect the date the archive was generated. Inside
+the archive the resource will be given the filename `eml.xml`.
+
+## Export feed resource
+
+One final resource, the export feed resource, allows DwCA generation to
+be automated and advertised through an RSS feed. While a single
+Specify 7 instance (or database) may utilize multiple DwCA definition
+and metadata resources, it may only use one export feed resource that
+will define all of the published exports. The export feed resource
+must be created at the *Global Resources* level of the hierarchy and
+must be named `ExportFeed`.
+
+The content of the export feed resource should be XML with a root
+element `<channel>` comprising one or more `<item>` elements. The
+channel element corresponds to the eponymous RSS element and may also
+include `<title>`, `<description>`, and `<language>` elements to be
+passed through to the generated RSS unchanged. Each `<item>` resource
+corresponds to an individual DwCA that may be published by the system.
+
+### Export feed item
+
+Like the `<channel>` element, the `<item>` element accepts several
+child elements that will be included in the RSS unchanged. These are
+`<title>`, `<description>`, `<id>`, and `<guid>`.
+
+Additionally, the `<item>` element requires the following attributes
+that control the generation of the DwCA the item is to represent:
+
+1. `collectionId` - This is the database id of the collection whose
+   data the DwCA will contain. The id of a collection can be found by
+   logging into the collection in a browser then visiting the URL
+   `http://SITE/context/collection/` and inspecting the `current` value in the
+   resulting JSON.
+   
+2. `userId` - This is the database id of the Specify user under whose
+   account the DwCA query should be executed. This can, in principle,
+   affect things like which formatters are used and should generally
+   be the same user as created the query. User ids can be found in the
+   URL shown in the browser when editing a user record.
+   
+3. `notifyUserId` - This attribute is optional and indicates that
+   notifications generated during export should go to the indicated
+   user rather than the user specified by `userId`.
+   
+4. `definition` - The name of
+   the [DwCA definition resource](#basic-dwca-definition-resource) to
+   be used to generate the DwCA. This resource must be associated with
+   the collection indicated by `collectionId`.
+   
+5. `metadata` - The name of
+   the [dataset metadata resource](#dataset-metadata-resource) to be
+   included in the DwCA. This resource must be associated with
+   the collection indicated by `collectionId`.
+   
+6. `days` - When the RSS feed is updated via
+   the [command line tool](#updating-the-data-publishing-feed), the DwCA represented
+   by this item will only be updated if it is more than the stated
+   number of days old.
+   
+7. `filename` - The filename to be given to the generated DwCA. This
+   filename will be used in URLs, so it is better if it doesn't
+   contain any awkward characters.
+   
+8. `publish` - If this attribute is not included and set to `true`,
+   the corresponding DwCA will not be included in the RSS
+   feed. Nevertheless, it will be generated or updated when
+   the [feed is updated](#updating-the-data-publishing-feed), and the
+   file will continue to be available for download to those knowing
+   the URL.
+   
+
+### Example Specify 7 export feed resource
+
+```xml
+<channel>
+  <title>KUBI ichthyology RSS Feed</title>
+  <description>RSS feed for KUBI Ichthyology Voucher and Tissue collections</description>
+
+  <item collectionId="4" userId="2" notifyUserId="2" definition="DwCA_voucher" metadata="DwCA_voucher_metadata" days="7" filename="kui-dwca.zip" publish="true">
+    <title>KU Fish</title>
+    <id>8f79c802-a58c-447f-99aa-1d6a0790825a</id>
+  </item>
+
+  <item collectionId="32768" userId="2" notifyUserId="2" definition="DwCA_tissue" metadata="DwCA_tissue_metadata" days="7" filename="kuit-dwca.zip" publish="true">
+    <title>KU Fish Tissue</title>
+    <id>56caf05f-1364-4f24-85f6-0c82520c2792</id>
+  </item>
+</channel>
+```
+
+### Export feed endpoint
+
+When a valid `ExportFeed` resource is present at the *Global
+Resources* app resource level, the `http://SITE/export/rss/` URL will become
+active and return the generated RSS feed.
+
+
+## Updating the data publishing feed
+
+When an RSS publishing feed has been [defined](#export-feed-resource)
+its contents can be updated in two separate ways.
+
+1. An admin user may select *Update Feed Now* from the *User Tools*
+   dialog. This will immediately update all items in the feed
+   irrespective of any `days` attribute. Notifications will also go to
+   the activating user rather than the user specified by the
+   `notifyUserId` attribute.
+   
+2. A command may be invoked on the Specify 7 server as follows from
+   the Specify 7 installation directory:
+   ```sh
+   python manage.py update_feed.py [--force]
+   
+   ```
+   The `--force` option will cause all items in the feed to be updated
+   regardless of any `days` attributes. Otherwise, only DwCA files
+   older than the given number of days will be updated by this
+   command.
+   
+   This command is intended to facilate a work-flow utilizing *cron*
+   or other task scheduler to maintain an up-to-date data publishing
+   feed.
+   
+   Note: If the installation is utilizing a python virtualenv, it
+   must be activated prior to issuing the command.
