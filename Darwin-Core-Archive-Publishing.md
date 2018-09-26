@@ -232,6 +232,32 @@ and not contain special characters.
 After these modifications, a query element and its contents can be
 copied into the `<queries>` element of a DwCA definition resource.
 
+##### Overriding the formatter or aggregator
+
+When a query field requires formatting or aggregating rows from a
+table Specify uses definitions from the **DataObjFormatters**
+appresource at the corresponding discipline level. By default the
+data export will use the same formatters and aggregators as the form
+system as configured through the schema config tool. For increased
+flexibility this mechanism can be overridden by adding a `formatName`
+attribute to `<field>` elements in the query stanza. The value of the
+attribute should be the name of one of the formatters or aggregators
+defined in **DataObjFormatters** for the relavent table.
+
+For instance, the following would apply the formatter named
+`CreateAttachmentURL` to the rows from the attachment table:
+
+```
+<query contextTableId="111" name="collectionobjectattachment.csv">
+    <!-- . -->
+    <field term="http://rs.tdwg.org/ac/terms/accessURI" isNot="false"
+           isRelFld="true" oper="1" 
+           stringId="111,41.attachment.attachment" value=""
+           formatName="CreateAttachmentURL"/>
+    <!-- . -->
+</query>
+```
+
 ### Testing a DwCA definition resource
 
 After a DwCA definition resource has been created, it can be tested by
